@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+	"strict": true,
+    "strictFunctionTypes": true,
+    "incremental": true,
+    "module": "commonjs",
+    "target": "es2018",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "removeComments": true,
+    "sourceMap": false,
+    "baseUrl": ".",
+    "outDir": "build",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}
