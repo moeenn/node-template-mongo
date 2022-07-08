@@ -1,13 +1,21 @@
 import fp from "fastify-plugin"
 import { Container } from "typedi"
 import { ServerInstance } from "./Server"
-import Controller from "./Controller"
+import AuthController from "./Controllers/Auth"
 
 async function Routes(fastify: ServerInstance): Promise<void> {
-  const controller = Container.get(Controller)
+  /**
+   *  initialize all controllers
+   * 
+  */
+  const authController = Container.get(AuthController)
 
-  fastify.get("/", controller.index())
-  fastify.post("/", controller.create())
+  /**
+   *  register all rountes
+   * 
+  */
+  fastify.get("/users", authController.index)
+  fastify.post("/", authController.create)
 }
 
 export default fp(Routes)
