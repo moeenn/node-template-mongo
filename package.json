@@ -8,8 +8,7 @@
     "start": "NODE_ENV=production node build/index.js",
     "test": "npx vitest",
     "lint": "npx eslint . --ext .ts",
-    "prepare": "husky install",
-    "migrate": "npx tsc && node build/Bin/Migrate.js"
+    "prepare": "husky install"
   },
   "_moduleAliases": {
     "@": "build"
@@ -34,7 +33,7 @@
     "fastify-plugin": "^3.0.1",
     "http-status": "^1.5.2",
     "module-alias": "^2.2.2",
-    "postgres": "^3.2.4",
+    "mongoose": "^6.4.3",
     "reflect-metadata": "^0.1.13",
     "typedi": "^0.10.0",
     "uuid": "^8.3.2",

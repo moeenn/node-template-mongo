@@ -12,10 +12,11 @@ export interface IEnv {
 @Service()
 export default class Env implements IEnv {
   private variables: IEnvSchema
+  private envPath = "src/.env.docker"
 
   constructor(nodeEnv: NodeEnv) {
     if (!nodeEnv.production) {
-      config({ path: "src/.env.docker" })
+      config({ path: this.envPath })
     }
 
     this.variables = this.validateEnvVariable(env)
