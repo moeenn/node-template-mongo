@@ -3,16 +3,14 @@ import Database, { Model } from "@/Infra/Database/Database"
 import Schema, { IUser } from "@/Infra/Database/Schema/UserSchema"
 
 @Service()
-export default class UserService {
-  private database: Database
-  private model: Model<IUser>
+export default class UserModel {
+  public model: Model<IUser>
 
-  constructor(database: Database) {
-    this.database = database
+  constructor(private database: Database) {
     this.model = this.database.conn.model<IUser>("users", Schema)
   }
 
-  async allUsers(): Promise<IUser[]> {
+  public async all(): Promise<IUser[]> {
     return await this.model.find()
   }
 }

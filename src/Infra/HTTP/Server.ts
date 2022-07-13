@@ -40,3 +40,17 @@ export default class Server implements IServer {
     }
   }
 }
+
+/**
+ *  helper for reporting errors from controllers 
+ * 
+*/
+export function report(response: Response, error: unknown, status = 400): Promise<void> {
+  response.code(status)
+
+  if (error instanceof Error) {
+    throw { error: error.message }
+  }
+
+  throw error  
+}

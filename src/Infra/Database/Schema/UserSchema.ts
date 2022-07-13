@@ -8,6 +8,7 @@ export interface IUser {
   user_role: IUserRole,
   password: string,
   approved: boolean,
+  token?: string,
 }
 
 export default new Schema(
