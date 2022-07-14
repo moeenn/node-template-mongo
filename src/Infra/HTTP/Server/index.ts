@@ -3,22 +3,21 @@ import Fastify, {
   FastifyInstance,
   FastifyRequest,
   FastifyReply,
-  RouteShorthandOptionsWithHandler
+  RouteShorthandOptionsWithHandler,
 } from "fastify"
+import { fastifyRequestContextPlugin } from "@fastify/request-context"
 import helmet from "@fastify/helmet"
-import Routes from "./Routes"
+import Routes from "@/Infra/HTTP/Routes/RoutesPlugin"
 
+export { default as report } from "./helpers/report"
 export type ServerInstance = FastifyInstance
 export type Request = FastifyRequest
 export type Response = FastifyReply
+export type Done = (error?: Error) => void
 export type RouteOptions = RouteShorthandOptionsWithHandler
 
-export interface IServer {
-  start: (port: number) => Promise<void>
-}
-
 @Service()
-export default class Server implements IServer {
+export default class Server {
   private app: FastifyInstance
 
   constructor() {
@@ -27,8 +26,15 @@ export default class Server implements IServer {
   }
 
   private registerPlugins(): void {
-    this.app.register(helmet)
-    this.app.register(Routes)
+    this.app
+      .register(helmet)
+      .register(Routes)
+      .register(fastifyRequestContextPlugin, {
+        hook: "preValidation",
+        defaultStoreValues: {
+          user: { id: "system" }
+        }
+      })
   }
 
   async start(port: number): Promise<void> {
@@ -39,18 +45,4 @@ export default class Server implements IServer {
       process.exit(1)
     }
   }
-}
-
-/**
- *  helper for reporting errors from controllers 
- * 
-*/
-export function report(response: Response, error: unknown, status = 400): Promise<void> {
-  response.code(status)
-
-  if (error instanceof Error) {
-    throw { error: error.message }
-  }
-
-  throw error  
 }

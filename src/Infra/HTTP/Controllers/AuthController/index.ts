@@ -57,4 +57,13 @@ export default class AuthController {
       user,
     }
   }
+
+  public async logout(req: Request): Promise<unknown> {
+    const user = req.requestContext.get("user")
+
+    return {
+      message: "user logged-out successfully",
+      user,
+    }
+  }
 }
