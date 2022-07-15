@@ -11,7 +11,7 @@ import { IUser } from "@/Infra/Database/Schema/UserSchema"
 export default class AuthController {
   constructor(
     private authService: AuthService
-  ) {}
+  ) { }
 
   public async register(req: Request, res: Response): Promise<unknown> {
     const issues = validate(req.body, RegisterSchema)
@@ -58,12 +58,17 @@ export default class AuthController {
     }
   }
 
-  public async logout(req: Request): Promise<unknown> {
-    const user = req.requestContext.get("user")
+  public async logout(req: Request, res: Response): Promise<unknown> {
+    const token = req.requestContext.get("token")
+
+    try {
+      await this.authService.logoutUser(token)
+    } catch (err) {
+      return report(res, err, status.BAD_REQUEST)
+    }
 
     return {
       message: "user logged-out successfully",
-      user,
     }
   }
 }

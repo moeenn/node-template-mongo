@@ -1,5 +1,9 @@
+import { Container } from "typedi"
+import AuthService from "@/Domain/Services/AuthService"
 import { FastifyAuthFunction } from "@fastify/auth"
 import { Request, Response, Done } from "@/Infra/HTTP/Server"
+
+const authService = Container.get(AuthService)
 
 const VerifyToken: FastifyAuthFunction = (
   req: Request,
@@ -8,21 +12,25 @@ const VerifyToken: FastifyAuthFunction = (
 ): void => {
   const auth = req.headers["authorization"]
   if (!auth) {
-    return done(new Error("Unauthorized"))
+    return done(new Error("unauthorized"))
   }
 
   const [, token] = auth.split(" ")
   if (!token) {
-    return done(new Error("Unauthorized"))
+    return done(new Error("unauthorized"))
   }
 
-  if (token !== "q1w2e3r4") {
-    return done(new Error("Unauthorized"))
-  }
+  authService
+    .findUserByToken(token)
+    .then(user => {
+      if (!user) {
+        return done(new Error("unauthorized"))
+      }
 
-  // TODO: fetch user from DB
-  req.requestContext.set("user", { id: 1, email: "something@site.com" })
-  done()
+      req.requestContext.set("user", user)
+      req.requestContext.set("token", token)
+      done()
+    })
 }
 
 export default VerifyToken

@@ -53,8 +53,23 @@ export default class AuthService {
   public async logoutUser(token: string): Promise<void> {
     const foundToken = await this.authTokenModel.model.findOne({ token })
     if (!foundToken) {
-      throw new Error("Invalid token provided")
+      throw new Error("invalid token provided")
     }
-    foundToken.deleteOne()
+    await foundToken.deleteOne()
   }
+
+  /**
+   *  protected routes will receive an auth token from the client
+   *  we must match this token to the appropriate user
+   * 
+  */
+  public async findUserByToken(token: string): Promise<Option<IUser>> {
+    const authToken = await this.authTokenModel.model.findOne({ token })    
+    if (!authToken) return
+
+    const user = await this.userModel.model.findOne({ _id: authToken.user_id })
+    if (!user) return
+
+    return user
+  }  
 }

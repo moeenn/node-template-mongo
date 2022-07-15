@@ -10,11 +10,15 @@ import UserController from "@/Infra/HTTP/Controllers/UserController"
 const userController = Container.get(UserController)
 const authController = Container.get(AuthController)
 
+/**
+ *  declare all application routes
+ * 
+*/
 const routes: Route[] = [
-  { url: "/users", method: "GET", auth: false, handler: () => userController.index() },
-  { url: "/register", method: "POST", auth: false, handler: (req, res) => authController.register(req, res) },
-  { url: "/login", method: "POST", auth: false, handler: (req, res) => authController.login(req, res) },
-  { url: "/logout", method: "GET", auth: true, handler: (req) => authController.logout(req) },
+  { url: "/users", method: "GET", auth: false, handler: userController.index.bind(UserController) },
+  { url: "/register", method: "POST", auth: false, handler: authController.register.bind(AuthController) },
+  { url: "/login", method: "POST", auth: false, handler: authController.login.bind(AuthController) },
+  { url: "/logout", method: "GET", auth: true, handler: authController.logout.bind(AuthController) },
 ]
 
 export default routes
