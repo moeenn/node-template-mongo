@@ -1,7 +1,6 @@
 import { Service } from "typedi"
 import { Request, Response, report } from "@/Infra/HTTP/Server"
 import status from "http-status"
-import validate from "@/Application/Helpers/Validate"
 
 import ForgotPasswordService from "@/Domain/Services/ForgotPasswordService"
 
