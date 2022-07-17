@@ -7,7 +7,7 @@ import routes from "."
 async function RoutesPlugin(fastify: ServerInstance): Promise<void> {
   for (const route of routes) {
     const { method, url, handler } = route
-
+    console.log(url)
     if (!route.auth) {
       fastify.route({ method, url, handler })
     }

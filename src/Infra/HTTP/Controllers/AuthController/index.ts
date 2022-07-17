@@ -11,7 +11,7 @@ import { IUser } from "@/Infra/Database/Schema/UserSchema"
 export default class AuthController {
   constructor(
     private authService: AuthService
-  ) { }
+  ) {}
 
   public async register(req: Request, res: Response): Promise<unknown> {
     const issues = validate(req.body, RegisterSchema)

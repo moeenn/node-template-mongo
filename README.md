@@ -13,11 +13,3 @@ $ npm run dev
 $ npm run build
 $ npm run start
 ```
-
-## TODO
-- [ ] Setup db tests
-- [ ] Setup db seeding mechanism
-- [ ] Test: Migrations system
-- [ ] Create Database Seeding Mechanism
-- [ ] Create Admin Seeder
-- [ ] Entity Factories

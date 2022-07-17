@@ -3,6 +3,8 @@ import Database, { Model } from "@/Infra/Database/Database"
 import Schema, { IAuthToken } from "@/Infra/Database/Schema/AuthTokenSchema"
 import Random from "@/Application/Helpers/Random"
 
+export { IAuthToken } from "@/Infra/Database/Schema/AuthTokenSchema"
+
 @Service()
 export default class AuthTokenModel {
   public model: Model<IAuthToken>

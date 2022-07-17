@@ -1,8 +1,7 @@
 import { Service } from "typedi"
 import Password from "@/Application/Helpers/Password"
-import UserModel from "@/Domain/Models/UserModel"
+import UserModel, { IUser } from "@/Domain/Models/UserModel"
 import AuthTokenModel from "@/Domain/Models/AuthTokenModel"
-import { IUser } from "@/Infra/Database/Schema/UserSchema"
 import { IRegisterSchema } from "@/Infra/HTTP/Controllers/AuthController/validations/register.schema"
 import { ILoginSchema } from "@/Infra/HTTP/Controllers/AuthController/validations/login.schema"
 
